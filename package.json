@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.js --require babel-register --exit"
+    "test": "mocha tests/*.js --require babel-register --exit",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/functions-framework": "^3.1.2",
+    "@google-cloud/storage": "^6.5.4",
     "babel-preset-env": "^1.7.0",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",

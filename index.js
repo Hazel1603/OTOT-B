@@ -2,15 +2,22 @@
 
 // Import express
 let express = require('express')
+const functions = require('@google-cloud/functions-framework');
 
 // Initialize the app
 let app = express();
 
 // Setup server port
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8003;
+
+// Register an HTTP function with the Functions Framework that will be executed
+// when you make an HTTP request to the deployed function's endpoint.
+functions.http('helloGET', (req, res) => {
+  res.send('Hello World!');
+});
 
 // Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express and Nodemon'));
+app.get('/test', (req, res) => res.send('Hello World with Express and Nodemon'));
 
 // Launch app to listen to specified port
 app.listen(port, function () {
