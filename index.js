@@ -21,7 +21,7 @@ app.get('/test', (req, res) => res.send('Hello World with Express and Nodemon'))
 
 // Launch app to listen to specified port
 app.listen(port, function () {
-     console.log("Running RestHub on port " + port);
+     console.log("Running Backend on port " + port);
 });
 
 // Import routes
@@ -47,8 +47,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to Mongoose and set connection variable
-// Deprecated: mongoose.connect('mongodb://localhost/resthub');
-// { useNewUrlParser: true}
 mongoose.connect('mongodb://localhost/OTOT-B');
 var db = mongoose.connection;
 

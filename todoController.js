@@ -1,5 +1,5 @@
 // todoController.js
-// Import contact model
+// Import todo model
 const Todo = require('./todoModel');
 
 // Handle index actions
@@ -60,13 +60,14 @@ exports.view = function (req, res) {
         }
 
         res.json({
-            message: 'Todo details loading..',
+            status: "success",
+            message: 'Todo details retrieved',
             data: todo
         });
     });
 };
 
-// Handle update contact info
+// Handle update todo info
 exports.patch = function (req, res) {
     Todo.findById(req.params.todo_id, function (err, todo) {
         if (err) {
@@ -83,17 +84,25 @@ exports.patch = function (req, res) {
         }
         const postData = req.query;
 
+        if (!postData.todoItem && !postData.description && !postData.type) {
+            res.status(400).json({
+                status: "error",
+                message: "No information was provided",
+            })
+            return;
+        }
+
         todo.todoItem = postData.todoItem ? postData.todoItem : todo.todoItem;
         todo.description = postData.description ? postData.description : todo.description;
         todo.type = postData.type ? postData.type : todo.type;
 
-        // save the contact and check for errors
+        // save the todo and check for errors
         todo.save(function (err) {
             if (err) {
                 res.json(err);
                 return;
             }
-            res.json({
+            res.status(400).json({
                 message: 'Todo Info updated',
                 data: todo
             });
@@ -101,7 +110,7 @@ exports.patch = function (req, res) {
     });
 };
 
-// Handle update contact info
+// Handle update todo info
 exports.put = function (req, res) {
     Todo.findById(req.params.todo_id, function (err, todo) {
         if (err) {
@@ -118,21 +127,22 @@ exports.put = function (req, res) {
         }
 
         const postData = req.query;
-        if (!postData.todoItem || !postData.description || !postData.type) {
+        if (!postData.todoItem || !postData.description) {
             res.json({
                 status: "error",
                 message: "Not all information is provided.",
             })
+            return;
         }
 
         todo.todoItem = postData.todoItem;
         todo.description = postData.description;
         todo.type = postData.type;
 
-        // save the contact and check for errors
+        // save the todo and check for errors
         todo.save(function (err) {
             if (err) {
-                res.json(err);
+                res.status(404).json(err);
                 return;
             }
             res.json({

@@ -58,6 +58,10 @@ function App() {
     setMessage('')
     setTableData([])
     if (httpMethod === 'GET') {
+      if (indexToIdMapping[id] === undefined) {
+        setErrorMsg('Id is invalid.')
+        return
+      }
       const newEndpoint = id === '' ? endpoint : endpoint + '/' + indexToIdMapping[id]
       get(newEndpoint)
         .then((res)=>res.json())
